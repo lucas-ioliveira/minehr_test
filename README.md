@@ -31,6 +31,12 @@ Headcount, em uma empresa, refere-se ao número total de funcionários em um det
 | :---------- | :--------- | :---------------------------------- |
 | `init_date` | `string` | **Obrigatório**. Campo do formato yyyy-MM-dd |
 | `end_date` | `string` | **Obrigatório**. Campo do formato yyyy-MM-dd |
+
+### Chamada da API 
+```http
+  GET /headcount/line_chart/?init_date=2022-01-01&end_date=2022-02-01
+```
+
 ### Resposta esperada
 ```http
   {
@@ -116,6 +122,12 @@ Os demais itens devem ficar iguais
 | `init_date` | `string` | **Obrigatório**. Campo do formato yyyy-MM-dd |
 | `end_date` | `string` | **Obrigatório**. Campo do formato yyyy-MM-dd |
 | `category` | `string` | **Obrigatório**. Qualquer campos de category da base |
+
+### Chamada da API 
+```http
+  GET /headcount/category_charts/?init_date=2022-01-01&end_date=2022-02-01
+```
+
 ### Resposta esperada
 ```http
 {
@@ -183,6 +195,12 @@ Turnover, por outro lado, é uma métrica que expressa a taxa de rotatividade de
 | :---------- | :--------- | :---------------------------------- |
 | `init_date` | `string` | **Obrigatório**. Campo do formato yyyy-MM-dd |
 | `end_date` | `string` | **Obrigatório**. Campo do formato yyyy-MM-dd |
+
+### Chamada da API 
+
+```http
+  GET /turnover/line_chart/?init_date=2022-01-01&end_date=2022-03-01
+```
 
 ### Resposta esperada
 ```http
@@ -266,6 +284,12 @@ Os demais itens devem ficar iguais
 | `end_date` | `string` | **Obrigatório**. Campo do formato yyyy-MM-dd |
 | `category` | `string` | **Obrigatório**. Qualquer campos de category da base |
 
+### Chamada da API 
+
+```http
+  GET /turnover/line_chart/?init_date=2022-01-01&end_date=2022-03-01&category=Cookfurt
+```
+
 ### Resposta esperada
 ```http
 {
@@ -311,30 +335,20 @@ Os itens que serão sobrescritos serão:
 - response['series']['series']
 Os demais itens devem ficar iguais   
 
-## Instalação
 
-Instale o projeto com:
-
-```bash
-  cd setup
-  pip install -r requirements.txt
-```
 ## Rodando o projeto
 
+Clone:
+
+```bash
+  git clone git@github.com:lucas-ioliveira/minehr_test.git 
+```
+
+
 Instale o projeto com:
 
 ```bash
-  python manage.py migrate    
-  python manage.py populate
-  python manage.py runserver    
+  docker compose -f docker-compose-dev.yml up --build   
 ```
- 
-## Entregáveis:
 
-- Compartilhe o repositório com os usuários felipeKosloski e lucasrbzrra no github
-- Collections do postman para recriarmos as chamadas
 
-## Sinta-se a vontade para sugerir melhorias ou tirar dúvidas
-
-- https://www.linkedin.com/in/felipekosloski/
-- https://www.linkedin.com/in/lucas-ribeiro-4179011b6/
