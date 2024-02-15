@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  minehr_backend:
+    container_name: minehr_backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      
+    command: ["/bin/bash", "-c",  python manage.py migrate && populate && runserver 0.0.0.0:8000"]

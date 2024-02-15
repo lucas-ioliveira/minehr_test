@@ -1,15 +1,15 @@
-FROM python:3.9
-
-RUN apt update && apt-get install -y xmlsec1
-
-COPY ./requirements.txt .
-
-RUN pip install -r requirements.txt
-
-COPY . /app
+FROM python:3.10.12-slim-buster
 
 WORKDIR /app
+COPY . /app
 
-ENV PORT 8000
+EXPOSE 8000
 
-CMD gunicorn --bind :$PORT --workers 3 --timeout 60 setup.wsgi:application
+RUN apt-get update \
+&& apt-get install -y pkg-config \
+&& apt-get install -y gcc \
+&& apt-get install -y default-libmysqlclient-dev \
+&& apt-get install -y python3-dev
+
+RUN pip install --upgrade pip
+RUN pip3 install -r requirements.txt
