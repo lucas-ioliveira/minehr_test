@@ -11,5 +11,5 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-      
-    command: ["/bin/bash", "-c",  python manage.py migrate && populate && runserver 0.0.0.0:8000"]
+
+    command: ["/bin/bash", "-c",  python manage.py migrate && populate && runserver 127.0.0.1:8002"]
