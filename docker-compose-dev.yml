@@ -12,4 +12,4 @@ services:
     volumes:
       - .:/app
 
-    command: ["/bin/bash", "-c",  python manage.py migrate && populate && runserver 127.0.0.1:8002"]
+    command: ["/bin/bash", "-c", "python manage.py runserver 0.0.0.0:8000"]

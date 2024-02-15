@@ -24,11 +24,6 @@ class TurnoverTotalView(APIView):
         filter['dt_reference_month__lte'] = end_date
         filter['fg_status'] = 1
         
-        ativos_periodo = Turnover.objects.filter(**filter, fg_dismissal_on_month=0).values('fg_status').count() 
-        media_ativos = ativos_periodo / 12
-        media_ativos_formatada = "{:.2f}".format(media_ativos)
-        media_ativos_formatada = float(media_ativos_formatada)
-
         soma_demitidos = Turnover.objects.filter(**filter, fg_dismissal_on_month=1).values('fg_dismissal_on_month').count()
         soma_demitidos = "{:.2f}".format(soma_demitidos)
         soma_demitidos = float(soma_demitidos)
@@ -37,15 +32,23 @@ class TurnoverTotalView(APIView):
         id_matricula = "{:.2f}".format(id_matricula)
         id_matricula = float(id_matricula)
 
-        calc = (soma_demitidos / media_ativos_formatada) * 100
-        calc = "{:.2f}".format(calc)
-        calc = float(calc)
+        mes_init = init_date.month
+        mes_end = end_date.month
+        range_data = mes_end - mes_init
+
+        if range_data == 0:
+            range_data = 1
+
+        calculo_1 = id_matricula / range_data
+        calculo_2 = (soma_demitidos / calculo_1) * 100 
+        result = "{:.2f}".format(calculo_2)
+        result = float(result)
 
         return JsonResponse({
                                "xAxis": {
                                     "type": "category",
                                     "data": [
-                                        calc
+                                        result
                                     ]
                                 },
                                 "yAxis": {
@@ -93,12 +96,7 @@ class TurnoverTotalCategoryView(APIView):
         filter['dt_reference_month__lte'] = end_date
         filter['fg_status'] = 1
         
-        ativos_periodo = Turnover.objects.filter(**filter, fg_dismissal_on_month=0).values('fg_status').count() 
-        media_ativos = ativos_periodo / 12
-        media_ativos_formatada = "{:.2f}".format(media_ativos)
-        media_ativos_formatada = float(media_ativos_formatada)
-
-        soma_demitidos = Turnover.objects.filter(**filter, fg_dismissal_on_month=1).values('fg_dismissal_on_month').count()
+        soma_demitidos = Turnover.objects.filter(**filter, fg_dismissal_on_month=0).values('fg_dismissal_on_month').count()
         soma_demitidos = "{:.2f}".format(soma_demitidos)
         soma_demitidos = float(soma_demitidos)
 
@@ -118,15 +116,23 @@ class TurnoverTotalCategoryView(APIView):
         id_matricula = "{:.2f}".format(id_matricula)
         id_matricula = float(id_matricula)
 
-        calc = (soma_demitidos / media_ativos_formatada) * 100
-        calc = "{:.2f}".format(calc)
-        calc = float(calc)
+        mes_init = init_date.month
+        mes_end = end_date.month
+        range_data = mes_end - mes_init
+
+        if range_data == 0:
+            range_data = 1
+
+        calculo_1 = id_matricula // range_data
+        calculo_2 = (soma_demitidos // calculo_1) * 100 
+        result = "{:.2f}".format(calculo_2)
+        result = float(result)
 
         return JsonResponse({
                                "xAxis": {
                                     "type": category,
                                     "data": [
-                                        calc
+                                        result
                                     ]
                                 },
                                 "yAxis": {

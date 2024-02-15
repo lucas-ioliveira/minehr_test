@@ -5,7 +5,7 @@ from headcount.models import Headcount
 
 class HeadcountTotalview(APIView):
     def get(self, request):
-        # http://127.0.0.1:8001/headcount/line_chart/?init_date=2022-01-01&end_date=2022-02-01
+        # http://127.0.0.1:8000/headcount/line_chart/?init_date=2022-01-01&end_date=2022-02-01
         init_date_str = request.query_params.get('init_date')
         end_date_str = request.query_params.get('end_date')
         filter = {}
@@ -55,7 +55,7 @@ class HeadcountTotalview(APIView):
 
 class HeadcountTotalCategoryView(APIView):
     def get(self, request):
-        #http://localhost:8001/headcount/category_charts/?init_date=2022-01-01&end_date=2022-02-01&category=2
+        #http://localhost:8000/headcount/category_charts/?init_date=2022-01-01&end_date=2022-02-01&category=2
         init_date_str = request.query_params.get('init_date')
         end_date_str = request.query_params.get('end_date')
         category = request.query_params.get('category')
@@ -70,7 +70,7 @@ class HeadcountTotalCategoryView(APIView):
         except ValueError:
             return JsonResponse({"error": "Formato de data inválido. A data deve estar no formato 'aaaa-mm-dd'"}, status=400)
         
-        filter['dt_reference_month__gte'] = init_date
+        filter['dt_reference_month__gte'] = end_date
         filter['dt_reference_month__lte'] = end_date
         filter['fg_status'] = 1
 
