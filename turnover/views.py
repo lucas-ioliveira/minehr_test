@@ -22,9 +22,10 @@ class TurnoverTotalView(APIView):
         
         filter['dt_reference_month__gte'] = init_date
         filter['dt_reference_month__lte'] = end_date
+        filter['fg_dismissal_on_month'] = 1
         filter['fg_status'] = 1
         
-        soma_demitidos = Turnover.objects.filter(**filter, fg_dismissal_on_month=1).values('fg_dismissal_on_month').count()
+        soma_demitidos = Turnover.objects.filter(**filter).values('fg_dismissal_on_month').count()
         soma_demitidos = "{:.2f}".format(soma_demitidos)
         soma_demitidos = float(soma_demitidos)
 
